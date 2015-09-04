@@ -1,0 +1,30 @@
+<head>
+  <title>audioTst</title>
+</head>
+
+<body>
+  <h1>Welcome to SoundBoard!</h1>
+
+  {{> hello}}
+</body>
+
+<template name="hello">
+  {{#each soundboards}}
+  {{> SoundBoard}}
+  {{/each}}
+  <br><br>
+  <p>
+  {{#each history}}
+  {{this.description}}
+  {{/each}}
+<br><br>
+  <button>Play Queue</button>
+</p>
+</template>
+
+
+<template name="SoundBoard">
+  <div class="soundBtn" style="width:{{this.width}}px;height:{{this.height}}px;background-color:{{this.colour}};">
+    <i class="fa {{this.icon}} fa-5x"></i>
+  </div>
+</template>
