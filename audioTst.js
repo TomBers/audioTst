@@ -13,10 +13,11 @@ if (Meteor.isClient) {
    this.index = idx;
    this.stillPlaying = false;
 
-//    this.sound.bind("ended", function(e) {
-//      this.stillPlaying = false;
-//     // console.log('Ended');
-// })
+   this.sound.bind("ended", function(e) {
+     console.log(e);
+    console.log(desc + ' Ended');
+    eatSnds(History.find({},{sort:{"date": -1}}).fetch());
+})
 
   //  SoundBoard.prototype.playSound = function () {
   //    this.stillPlaying = true;
@@ -55,10 +56,7 @@ if (Meteor.isClient) {
 
   Template.hello.events({
   'click button':function(){
-
-    eatSounds(History.find({},{sort:{"date":1}}).fetch());
-    // Meteor.call('removeAll');
-
+    eatSnds( History.find({},{sort:{"date": -1}}).fetch() );
   }
   });
 
@@ -74,15 +72,26 @@ if (Meteor.isClient) {
 
 }
 
-function eatSounds(snds){
+function eatSnds(snds){
   console.log(snds);
-    var sb = snds.shift();
-    var elementPos = sounds.map(function(x) {return x.description; }).indexOf(sb.description);
-    sounds[elementPos].sound.play().bind("ended", function(e) {
-      if(snds.length > 0){eatSounds(snds);}
-      History.remove({_id:sb._id});
-    });
+  try{
+  var sb = snds.pop();
+  History.remove({_id:sb._id});
+
+  var elementPos = sounds.map(function(x) {return x.description; }).indexOf(sb.description);
+  sounds[elementPos].sound.play();
+
+ //  .bind("ended", function(e) {
+ //    if(snds.length >= 1){
+ //   eatSnds(snds);
+ //  //  console.log(snds);
+ // }
+
+// });
+}catch(e){}
 }
+
+
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
