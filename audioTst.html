@@ -5,23 +5,38 @@
 <body>
   <h1>Welcome to SoundBoard!</h1>
 
-  {{> hello}}
+  {{> track}}
+
 </body>
 
-<template name="hello">
-  {{#each soundboards}}
+<template name="track">
+  <fieldset class="inline">
+  <legend>Track 1</legend>
+  {{#each sb1}}
   {{> SoundBoard}}
   {{/each}}
-  <br><br>
-  <p>
-    <ol>
-  {{#each history}}
+
+  <button class='trk1'>Play Track 1</button>
+  <ol>
+{{#each history1}}
+<li>{{this.description}}</li>
+{{/each}}
+</ol>
+</fieldset>
+
+<fieldset class="inline">
+<legend>Track 2</legend>
+  {{#each sb2}}
+  {{> SoundBoard}}
+  {{/each}}
+    <button class='trk2'>Play Track 2</button>
+  <ol>
+  {{#each history2}}
   <li>{{this.description}}</li>
   {{/each}}
-</ol>
-<br><br>
-  <button>Play Queue</button>
-</p>
+  </ol>
+</fieldset>
+
 </template>
 
 
